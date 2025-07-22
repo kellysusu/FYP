@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -16,7 +15,6 @@ from catboost import CatBoostRegressor, Pool
 from io import BytesIO
 import base64
 
-
 # Set Streamlit page config
 st.set_page_config(page_title="Marketing Dashboard & Predictor", layout="wide")
 
@@ -28,12 +26,11 @@ def load_data():
 df = load_data()
 
 # ----------------------------------
-# 🎨 Custom Color Palettes
+# Custom Color Palettes
 # ----------------------------------
 # def get_custom_palette(cmap_name, n_colors=6):
 #     cmap = cm.get_cmap(cmap_name)
 #     return [mcolors.to_hex(cmap(i / (n_colors - 1))) for i in range(n_colors)]
-
 
 color_options = {
     "Sky Blue": sns.color_palette("Blues", 6).as_hex(),
@@ -45,8 +42,9 @@ color_options = {
     "Classic Seaborn": sns.color_palette("deep", 6).as_hex(),
 }
 
+
 # ----------------------------------
-# ⏹ Sidebar Controls
+# Sidebar Controls
 # ----------------------------------
 company_selection = st.sidebar.selectbox(
     "Select Company to Analyze",
@@ -61,19 +59,19 @@ if company_selection != "All Companies":
 
 
 # ----------------------------
-# 📊 DASHBOARD FUNCTION
+# DASHBOARD FUNCTION
 # ----------------------------
 def show_dashboard(df, company):
     st.title("Marketing Campaign Dashboard")
     st.markdown(f"### **{company}**")
 
-    # 🎨 Color Theme
+    # Color Theme
     with st.container():
         st.markdown("###### Select a Color Theme")
         selected_color_label = st.selectbox("Choose Visualization Theme", list(color_options.keys()))
         selected_palette = color_options[selected_color_label]
 
-    # 🎯 Campaign Type Filter
+    # Campaign Type Filter
     with st.container():
         st.markdown("###### Filter by Campaign Type")
         campaign_types = df["Campaign_Type"].unique().tolist()
@@ -84,7 +82,7 @@ def show_dashboard(df, company):
         )
         df = df[df["Campaign_Type"].isin(selected_campaign_types)]
 
-    # 🧮 Metrics Calculation
+    # Metrics Calculation
     total_campaigns = len(df)
     total_cost = df["Acquisition_Cost"].sum()
     total_conversion = df["Conversion"].sum()
@@ -97,7 +95,7 @@ def show_dashboard(df, company):
 
 
     # ----------------------------
-    # 🧾 3-Column Layout
+    # 3-Column Layout
     # ----------------------------
 
     def human_format(num, precision=1):
@@ -108,10 +106,10 @@ def show_dashboard(df, company):
             num /= 1000
         return f"{num:.{precision}f}T"
 
-
     col1, col2, col3 = st.columns([0.5, 1.5, 1])
 
-    # 🔹 Column 1: Metrics
+    
+    # Column 1: Metrics
     with col1:
         st.markdown("#### Key Metrics")
         st.metric("Total Campaigns", f"{human_format(total_campaigns, 0)}")
@@ -123,10 +121,9 @@ def show_dashboard(df, company):
         st.metric("Conversions", f"{human_format(total_conversion, 0)}")
         st.metric("Cost per Conversion", f"${cost_per_conversion:,.2f}")
         # st.metric("Cost per Click", f"${cost_per_click:,.2f}")
-        
 
-
-    # 🔹 Column 2: Grouped Bar (Impressions & Clicks) + Conversion Line (Dual Y-Axis)
+    
+    # Column 2: Grouped Bar (Impressions & Clicks) + Conversion Line (Dual Y-Axis)
     with col2:
         st.markdown("#### Channel Performance Overview")
         
@@ -189,8 +186,6 @@ def show_dashboard(df, company):
 
         # Show in Streamlit
         st.plotly_chart(fig, use_container_width=True)
-
-
            
         # Aggregate data
         agg_bubble = df.groupby("Channel_Used").agg({
@@ -234,18 +229,13 @@ def show_dashboard(df, company):
 
         fig_bubble.update_layout(
             margin=dict(l=40, r=40, t=10, b=200),
-            showlegend=False  # 👈 This line hides the legend box
+            showlegend=False 
         )
 
         st.plotly_chart(fig_bubble, use_container_width=True)
 
-
-
-
-
-
-
-    # 🔹 Column 3: Engagement & Grouped Bars
+    
+    # Column 3: Engagement & Grouped Bars
     with col3:
         st.markdown("#### Audience Segment Performance")
 
@@ -264,9 +254,6 @@ def show_dashboard(df, company):
 
         # Display DataFrame
         st.dataframe(location_df, height=140)
-
-
-
 
         # Prepare data for gender-age conversion rate chart
         df_gender_age = (
@@ -303,10 +290,6 @@ def show_dashboard(df, company):
 
         st.plotly_chart(fig_sunburst, use_container_width=True)
 
-
-
-
-
         # Prepare data
         df_segment = (
             df.groupby("Customer_Segment")["Conversion_Rate"]
@@ -342,21 +325,8 @@ def show_dashboard(df, company):
         st.plotly_chart(fig_segment, use_container_width=True)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # ----------------------------
-# 🤖 PREDICTION INTERFACE FUNCTION
+# PREDICTION INTERFACE FUNCTION
 # ----------------------------
 def show_prediction_interface():
     st.title("Conversion Rate Predictor")
@@ -377,7 +347,6 @@ def show_prediction_interface():
     categorical_cols = meta['categorical_cols']
     column_order = meta['column_order']
 
-    
     st.subheader("Enter Campaign Details")
 
     # --- Section 1: General campaign info (no impressions/clicks yet) ---
@@ -394,7 +363,6 @@ def show_prediction_interface():
         "Acquisition_Cost": st.number_input("Acquisition Cost (in USD)", 0, 20000, step=100),
         "Engagement_Score": st.number_input("Engagement Score (0 to 10)", 0, 10, step=1),
     }
-
 
     st.markdown("---")
 
@@ -421,7 +389,7 @@ def show_prediction_interface():
         st.success(f"**Predicted Conversion Rate:** {prediction * 100:.2f}%")
 
         # SHAP Analysis
-        st.subheader("🔎 SHAP Feature Contribution (Waterfall)")
+        st.subheader("SHAP Feature Contribution (Waterfall)")
         st.caption("""
         This SHAP waterfall chart shows how each input feature contributed to the final predicted conversion rate:
 
@@ -476,7 +444,7 @@ def show_prediction_interface():
 
 
 # ----------------------------
-# 🔁 MAIN VIEW SWITCHER
+# MAIN VIEW SWITCHER
 # ----------------------------
 if page == "Marketing Dashboard":
     show_dashboard(df, company_selection)
@@ -484,6 +452,5 @@ else:
     show_prediction_interface()
 
 
-
+    
 # PLEASE type "python -m streamlit run app.py" in terminal to run this file
-
