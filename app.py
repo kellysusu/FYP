@@ -23,7 +23,7 @@ st.set_page_config(page_title="Marketing Dashboard & Predictor", layout="wide")
 # Load dataset
 @st.cache_data
 def load_data():
-    return pd.read_csv("data/cleaned_marketing_campaign_dataset.csv")
+    return pd.read_csv("cleaned_marketing_campaign_dataset.csv")
 
 df = load_data()
 
@@ -367,8 +367,8 @@ def show_prediction_interface():
     )
 
     # Load model & metadata
-    model_path = f"models/catboost_{company.replace(' ', '_').lower()}.cbm"
-    meta_path = f"models/meta_{company.replace(' ', '_').lower()}.pkl"
+    model_path = f"catboost_{company.replace(' ', '_').lower()}.cbm"
+    meta_path = f"meta_{company.replace(' ', '_').lower()}.pkl"
 
     model = CatBoostRegressor()
     model.load_model(model_path)
