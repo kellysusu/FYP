@@ -53,7 +53,7 @@ company_selection = st.sidebar.selectbox(
     ["All Companies",  "Alpha Innovations", "DataTech Solutions", "Innovate Industries", "NexGen Systems", "TechCorp"]
 )
 
-page = st.sidebar.radio("Select View", ["Marketing Dashboard", "Predict Conversion Rate"])
+page = st.sidebar.radio("Select View", ["Marketing Dashboard", "Conversion Rate Predictor"])
 
 # Apply company filter
 if company_selection != "All Companies":
