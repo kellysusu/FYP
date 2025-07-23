@@ -394,9 +394,9 @@ def show_prediction_interface():
         This SHAP waterfall chart shows how each input feature contributed to the final predicted conversion rate:
 
         - Features are ordered from **most to least impactful** (left to right).
-        - **Positive bars (blue)** push the prediction **upwards** (increase conversion rate).
+        - **Positive bars (green)** push the prediction **upwards** (increase conversion rate).
         - **Negative bars (red)** push the prediction **downwards** (decrease conversion rate).
-        - The final bar labeled **"Predicted CVR"** shows the total result after all feature contributions are applied to the model’s base value (average prediction).
+        - The final bar labeled **"Predicted CVR"** (blue) shows the total result after all feature contributions are applied to the model’s base value (average prediction).
         """)
         # SHAP Explainer
         explainer = shap.TreeExplainer(model)
