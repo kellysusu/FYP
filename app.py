@@ -396,7 +396,7 @@ def show_prediction_interface():
         - Features are ordered from **most to least impactful** (left to right).
         - **Positive bars (green)** push the prediction **upwards** (increase conversion rate).
         - **Negative bars (red)** push the prediction **downwards** (decrease conversion rate).
-        - The final bar labeled **"Predicted CVR"** (blue) shows the total result after all feature contributions are applied to the model’s base value (average prediction).
+        - The final bar labeled **"Predicted CVR" (blue)** shows the total result after all feature contributions are applied to the model’s base value (average prediction).
         """)
         # SHAP Explainer
         explainer = shap.TreeExplainer(model)
