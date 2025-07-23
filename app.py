@@ -359,7 +359,7 @@ def show_prediction_interface():
         "Location": st.selectbox("Target Location", sorted(["Miami", "New York", "Chicago", "Los Angeles", "Houston"])),
         "Language": st.selectbox("Language", sorted(["English", "Spanish", "Mandarin", "German", "French"])),
         "Duration": st.number_input("Campaign Duration (days)", 0, 120, step=1),
-        "ROI": st.number_input("ROI (Return on Investment)", 0.0, 10.0, step=0.01),
+        "ROI": st.number_input("ROI (Return on Investment) (%)", 0.0, 10.0, step=0.01),
         "Acquisition_Cost": st.number_input("Acquisition Cost (in USD)", 0, 20000, step=100),
         "Engagement_Score": st.number_input("Engagement Score (0 to 10)", 0, 10, step=1),
     }
